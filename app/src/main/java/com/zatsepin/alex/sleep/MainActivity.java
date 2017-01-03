@@ -70,6 +70,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String min = et_m.getText().toString();
         String hours = et_h.getText().toString();
         String sec = et_s.getText().toString();
+        if ((!hours.matches("^\\d+"))&&(!hours.matches("^\\d+"))&&(!hours.matches("^\\d+"))) {
+            Toast.makeText(this,"Only text please",Toast.LENGTH_LONG).show();
+        }
+        et_h.setText("0");
+        et_m.setText("0");
+        et_s.setText("0");
         task = new TimerTask();
         int time = Integer.valueOf(sec) + 60 * Integer.valueOf(min) + 60 * 60 * Integer.valueOf(hours);
         task.execute(time);
@@ -81,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected Void doInBackground(Integer... args) {
             int counter = args[0];
+            if (counter == 0){
+                return null;
+            }
             NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
                     .setContentTitle("Sleeper")
                     .setContentText("Music shut down in " + counter)
